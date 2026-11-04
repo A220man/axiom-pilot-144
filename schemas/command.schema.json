@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cursor Command Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "description", "script"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$",
+      "description": "Command identifier. Lowercase letters, numbers, and hyphens only. Must match the parent folder name."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "description": "Description of what the command does."
+    },
+    "script": {
+      "type": "string",
+      "description": "Path to the script to execute (relative to command directory)."
+    },
+    "arguments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "description"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
+            "description": "Argument name (camelCase or snake_case)."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Argument description."
+          },
+          "type": {
+            "type": "string",
+            "enum": ["string", "number", "boolean"],
+            "default": "string",
+            "description": "Argument type."
+          },
+          "required": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether the argument is required."
+          },
+          "default": {
+            "type": ["string", "number", "boolean"],
+            "description": "Default value for the argument."
+          }
+        }
+      },
+      "description": "Command arguments configuration."
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon identifier for UI display."
+    },
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$",
+      "description": "Hex color code for UI display (e.g., #ff0000)."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Client-specific extra fields."
+    }
+  }
+}

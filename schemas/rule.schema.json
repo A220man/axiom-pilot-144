@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cursor Rule Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "description", "conditions", "actions"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$",
+      "description": "Rule identifier. Lowercase letters, numbers, and hyphens only. Must match the filename (without .mdc extension)."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "description": "Description of what the rule does."
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "pattern"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["file_pattern", "language", "always"],
+            "description": "Type of condition to match."
+          },
+          "pattern": {
+            "type": "string",
+            "description": "Pattern to match (glob for file_pattern, language ID for language)."
+          }
+        }
+      },
+      "minItems": 1,
+      "description": "Conditions that must be met for the rule to apply."
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["add_context", "run_command", "suggest"],
+            "description": "Type of action to perform."
+          },
+          "content": {
+            "type": "string",
+            "description": "Content to add as context (for add_context action)."
+          },
+          "command": {
+            "type": "string",
+            "description": "Command to run for run_command action."
+          },
+          "message": {
+            "type": "string",
+            "description": "Suggestion message for suggest action."
+          }
+        }
+      },
+      "minItems": 1,
+      "description": "Actions to take when conditions match."
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 50,
+      "description": "Rule priority (higher runs first)."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Client-specific extra fields."
+    }
+  }
+}

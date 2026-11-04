@@ -1,0 +1,14 @@
+{
+  "events": [
+    {
+      "event": "on-save",
+      "script": "format.js"
+    },
+    {
+      "event": "on-edit",
+      "script": "lint.js",
+      "condition": "file.endsWith('.js')"
+    }
+  ]
+}
+

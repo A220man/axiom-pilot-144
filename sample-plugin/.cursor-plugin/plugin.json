@@ -1,0 +1,24 @@
+{
+  "name": "sample-plugin",
+  "version": "1.0.0",
+  "displayName": "Sample Plugin",
+  "description": "A sample plugin for testing",
+  "skills": ["sample-skill", "sample-skill-with-scripts"],
+  "agents": ["sample-agent"],
+  "commands": ["sample-command"],
+  "hooks": ["sample-hook"],
+  "mcpServers": ["sample-server"],
+  "rules": ["sample-rule"],
+  "variables": {
+    "API_KEY": {
+      "description": "API key for the service",
+      "required": true,
+      "default": "test-key"
+    },
+    "DEBUG": {
+      "description": "Enable debug mode",
+      "default": "false",
+      "required": false
+    }
+  }
+}

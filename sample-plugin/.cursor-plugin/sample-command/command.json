@@ -1,0 +1,25 @@
+{
+  "name": "sample-command",
+  "description": "A sample command for testing validation",
+  "script": "index.js",
+  "arguments": [
+    {
+      "name": "input",
+      "type": "string",
+      "required": true,
+      "description": "Input text to process"
+    },
+    {
+      "name": "count",
+      "type": "number",
+      "required": false,
+      "default": 1,
+      "description": "Number of times to repeat"
+    }
+  ],
+  "icon": "terminal",
+  "color": "#00ff00",
+  "metadata": {
+    "cursor-display-name": "Sample Command"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "axiom-pilot-144-ryan-vo",
+  "version": "0.1.0",
+  "description": "Cursor plugin specification and official plugins",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate-plugins.mjs",
+    "validate:script-package": "node scripts/validate-script-package.mjs",
+    "test": "node tests/test-plugin-validation.mjs && node tests/test-skill-validation.mjs && node tests/test-mcp-validation.mjs && node tests/test-validator-cli.mjs && node tests/test-script-package-validation.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1"
+  },
+  "dependencies": {
+    "js-yaml": "^5.5.0"
+  }
+}

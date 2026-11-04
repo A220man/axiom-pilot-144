@@ -1,0 +1,20 @@
+{
+  "name": "sample-rule",
+  "description": "A sample rule for testing validation",
+  "conditions": [
+    {
+      "type": "file_pattern",
+      "pattern": "*.js"
+    }
+  ],
+  "actions": [
+    {
+      "type": "add_context",
+      "content": "This is a JavaScript file"
+    }
+  ],
+  "priority": 75,
+  "metadata": {
+    "cursor-display-name": "Sample Rule"
+  }
+}

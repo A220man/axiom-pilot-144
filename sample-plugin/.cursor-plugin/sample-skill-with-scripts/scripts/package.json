@@ -1,0 +1,10 @@
+{
+  "name": "sample-skill-with-scripts",
+  "version": "1.0.0",
+  "description": "Script package for sample skill",
+  "scripts": {
+    "test": "echo 'tests passed'",
+    "typecheck": "echo 'typecheck passed'"
+  },
+  "private": true
+}
