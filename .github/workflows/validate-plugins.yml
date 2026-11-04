@@ -1,0 +1,74 @@
+name: Validate Plugins
+
+on:
+  pull_request:
+    paths:
+      - '**/*.json'
+      - '**/SKILL.md'
+      - '**/*.md'
+      - 'schemas/**'
+      - 'scripts/**'
+      - 'tests/**'
+  push:
+    branches: [main]
+    paths:
+      - '**/*.json'
+      - '**/SKILL.md'
+      - '**/*.md'
+      - 'schemas/**'
+      - 'scripts/**'
+      - 'tests/**'
+
+jobs:
+  validate:
+    name: Validate Plugin Specifications
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Validate plugin manifests
+        run: node scripts/validate-plugins.mjs .
+
+      - name: Validate all skills
+        run: |
+          find . -name "SKILL.md" -type f | while read skill; do
+            echo "Validating $skill..."
+            node scripts/validate-skill.mjs "$skill" || exit 1
+          done
+
+
+  validate-scripts:
+    name: Validate Script Packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Find and validate script packages
+        run: |
+          # Find all script package.json files in skill directories
+          find . -path "*/.cursor-plugin/*/scripts/package.json" -type f | while read pkg; do
+            echo "Validating script package: $pkg"
+            node scripts/validate-script-package.mjs "$pkg" --test --typecheck || exit 1
+          done
+        shell: bash

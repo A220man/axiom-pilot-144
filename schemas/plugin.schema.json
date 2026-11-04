@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cursor Plugin Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "version", "displayName", "description"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$",
+      "description": "Unique plugin identifier. Lowercase letters, numbers, hyphens, and dots only."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?$",
+      "description": "Semantic version (major.minor.patch[-prerelease])."
+    },
+    "displayName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "Human-readable plugin name for UI display."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "description": "Brief description of what the plugin does."
+    },
+    "skills": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Directory names of skills provided by this plugin."
+    },
+    "agents": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Directory names of agents provided by this plugin."
+    },
+    "commands": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Directory names of commands provided by this plugin."
+    },
+    "hooks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Directory names of hooks provided by this plugin."
+    },
+    "mcpServers": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "MCP server definitions."
+    },
+    "rules": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Directory names of rules provided by this plugin."
+    },
+    "variables": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["description"],
+        "properties": {
+          "description": { "type": "string" },
+          "default": { "type": "string" },
+          "required": { "type": "boolean", "default": false }
+        }
+      },
+      "description": "Configuration variables for the plugin."
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cursor Script Package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "version", "scripts"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$",
+      "description": "Package name. Lowercase letters, numbers, hyphens, and dots only."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?$",
+      "description": "Semantic version (major.minor.patch[-prerelease])."
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Brief description of the script package."
+    },
+    "scripts": {
+      "type": "object",
+      "required": ["test", "typecheck"],
+      "additionalProperties": { "type": "string" },
+      "properties": {
+        "test": {
+          "type": "string",
+          "description": "Test command (e.g., 'bun test')"
+        },
+        "typecheck": {
+          "type": "string",
+          "description": "Type checking command (e.g., 'tsc --noEmit')"
+        }
+      },
+      "description": "Script commands. Must include 'test' and 'typecheck'."
+    },
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Runtime dependencies."
+    },
+    "devDependencies": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Development dependencies."
+    },
+    "private": {
+      "type": "boolean",
+      "description": "Whether the package is private (not published)."
+    }
+  }
+}

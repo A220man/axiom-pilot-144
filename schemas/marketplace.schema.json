@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cursor Plugin Marketplace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["plugins"],
+  "properties": {
+    "plugins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "version", "path"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$",
+            "description": "Plugin identifier matching plugin.json name field."
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?$",
+            "description": "Semantic version matching plugin.json version field."
+          },
+          "path": {
+            "type": "string",
+            "description": "Relative path to the plugin directory containing plugin.json."
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "Human-readable plugin name for marketplace display."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "description": "Brief description for marketplace listing."
+          },
+          "author": {
+            "type": "string",
+            "description": "Plugin author name."
+          },
+          "repository": {
+            "type": "string",
+            "format": "uri",
+            "description": "Plugin source repository URL."
+          },
+          "icon": {
+            "type": "string",
+            "description": "Relative path to plugin icon within plugin directory."
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Marketplace tags for categorization."
+          },
+          "license": {
+            "type": "string",
+            "description": "SPDX license identifier."
+          }
+        }
+      }
+    }
+  }
+}

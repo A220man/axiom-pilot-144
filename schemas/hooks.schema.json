@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cursor Hooks Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["events"],
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["event", "script"],
+        "properties": {
+          "event": {
+            "type": "string",
+            "description": "Event name to hook into (e.g., on-save, on-edit)"
+          },
+          "script": {
+            "type": "string",
+            "description": "Path to the script to execute"
+          },
+          "condition": {
+            "type": "string",
+            "description": "Optional condition for when to run the hook"
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,16 @@
+{
+  "plugins": [
+    {
+      "name": "sample-plugin",
+      "version": "1.0.0",
+      "path": ".",
+      "displayName": "Sample Plugin",
+      "description": "A sample plugin for testing",
+      "author": "Test Author",
+      "repository": "https://github.com/example/sample-plugin",
+      "icon": "icon.png",
+      "tags": ["sample", "test"],
+      "license": "MIT"
+    }
+  ]
+}

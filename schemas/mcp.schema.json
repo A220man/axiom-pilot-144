@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MCP Server Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "command"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique name for the MCP server"
+    },
+    "command": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Command to start the MCP server"
+    },
+    "args": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Arguments for the command"
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Environment variables for the server"
+    },
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[A-Z_][A-Z0-9_]*$" },
+          "description": { "type": "string" },
+          "default": { "type": "string" },
+          "required": { "type": "boolean", "default": false }
+        }
+      },
+      "description": "Variables that can be substituted in command, args, and env"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "sample-server",
+  "command": "node",
+  "args": ["server.js", "--api-key", "${API_KEY}"],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "variables": [
+    {
+      "name": "DEBUG_LEVEL",
+      "description": "Debug logging level",
+      "default": "info",
+      "required": false
+    }
+  ]
+}
