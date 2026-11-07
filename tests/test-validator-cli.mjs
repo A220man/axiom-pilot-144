@@ -210,6 +210,25 @@ allPassed &= runTest('Invalid hooks.json missing script', {
     ]
   }, null, 2)
 }, false, { API_KEY: 'test-key' });
+
+// Invalid hooks.json with additional properties (schema has additionalProperties: false)
+allPassed &= runTest('Invalid hooks.json additional properties', {
+  name: 'test-plugin',
+  version: '1.0.0',
+  displayName: 'Test Plugin',
+  description: 'A test plugin',
+  hooks: ['test-hook'],
+  variables: { API_KEY: { description: 'API key', required: true } }
+}, {
+  'test-hook/hooks.json': JSON.stringify({
+    events: [
+      { event: 'on-save', script: 'format.js' }
+    ],
+    invalidProperty: 'should not be allowed'
+  }, null, 2),
+  'test-hook/format.js': 'console.log("formatting...");'
+}, false, { API_KEY: 'test-key' });
+
 // Invalid command.json missing required fields
 allPassed &= runTest('Invalid command.json missing required fields', {
   name: 'test-plugin',

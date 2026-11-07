@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-hook-script-existence-validation
+hooks-schema-validation
 
 ## Roadmap
 
@@ -220,6 +220,21 @@ Acceptance:
 - All existing tests continue to pass
 
 Implementation: `scripts/validate-plugins.mjs (updated validateHooks function)`, `tests/test-validator-cli.mjs (updated valid plugin test fixture)`, `sample-plugin/.cursor-plugin/sample-hook/format.js (added)`, `sample-plugin/.cursor-plugin/sample-hook/lint.js (added)`
+
+Tests: `tests/test-validator-cli.mjs`
+
+### hooks-schema-validation — Hooks JSON schema validation
+
+Status: done
+
+Acceptance:
+- hooks.schema.json loaded and compiled as validator in validate-plugins.mjs
+- validateHooks function uses hooksValidate for schema validation
+- Schema validation rejects additional properties (additionalProperties: false)
+- Runtime script file existence check preserved alongside schema validation
+- Test added for additional properties rejection
+
+Implementation: `schemas/hooks.schema.json`, `scripts/validate-plugins.mjs (added hooksValidate, updated validateHooks)`, `tests/test-validator-cli.mjs (added additional properties test)`
 
 Tests: `tests/test-validator-cli.mjs`
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_feature": "hook-script-existence-validation",
+  "current_feature": "hooks-schema-validation",
   "features": [
     {
       "id": "plugin-manifest-schema",
@@ -291,6 +291,26 @@
         "tests/test-validator-cli.mjs (updated valid plugin test fixture)",
         "sample-plugin/.cursor-plugin/sample-hook/format.js (added)",
         "sample-plugin/.cursor-plugin/sample-hook/lint.js (added)"
+      ],
+      "tests": [
+        "tests/test-validator-cli.mjs"
+      ]
+    },
+    {
+      "id": "hooks-schema-validation",
+      "title": "Hooks JSON schema validation",
+      "status": "done",
+      "acceptance": [
+        "hooks.schema.json loaded and compiled as validator in validate-plugins.mjs",
+        "validateHooks function uses hooksValidate for schema validation",
+        "Schema validation rejects additional properties (additionalProperties: false)",
+        "Runtime script file existence check preserved alongside schema validation",
+        "Test added for additional properties rejection"
+      ],
+      "implementation": [
+        "schemas/hooks.schema.json",
+        "scripts/validate-plugins.mjs (added hooksValidate, updated validateHooks)",
+        "tests/test-validator-cli.mjs (added additional properties test)"
       ],
       "tests": [
         "tests/test-validator-cli.mjs"
