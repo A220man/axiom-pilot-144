@@ -45,6 +45,11 @@ const ruleSchemaPath = path.resolve(defaultRootDir, 'schemas/rule.schema.json');
 const ruleSchema = JSON.parse(fs.readFileSync(ruleSchemaPath, 'utf-8'));
 const ruleValidate = ajv.compile(ruleSchema);
 
+// Load hooks schema and validator
+const hooksSchemaPath = path.resolve(defaultRootDir, 'schemas/hooks.schema.json');
+const hooksSchema = JSON.parse(fs.readFileSync(hooksSchemaPath, 'utf-8'));
+const hooksValidate = ajv.compile(hooksSchema);
+
 // Load script package schema and validator
 const scriptPackageSchemaPath = path.resolve(defaultRootDir, 'schemas/script-package.schema.json');
 const scriptPackageSchema = JSON.parse(fs.readFileSync(scriptPackageSchemaPath, 'utf-8'));
@@ -349,29 +354,24 @@ function validateHooks(hooksPath) {
   } catch (e) {
     return { valid: false, errors: [{ instancePath: '', message: `Invalid JSON: ${e.message}` }] };
   }
-  const errors = [];
-  if (!Array.isArray(hooks.events)) {
-    errors.push({ instancePath: '/events', message: 'hooks.json must have an events array' });
-  } else {
+  
+  // Validate against schema
+  const valid = hooksValidate(hooks);
+  const errors = valid ? [] : (hooksValidate.errors || []).map(e => ({ instancePath: e.instancePath, message: e.message }));
+  
+  // Additional runtime check: verify script files exist
+  if (valid && Array.isArray(hooks.events)) {
     for (let i = 0; i < hooks.events.length; i++) {
       const event = hooks.events[i];
-      if (!event.event || typeof event.event !== 'string') {
-        errors.push({ instancePath: `/events/${i}/event`, message: 'Each event must have an event string' });
-      }
-      if (!event.script || typeof event.script !== 'string') {
-        errors.push({ instancePath: `/events/${i}/script`, message: 'Each event must have a script string' });
-      } else {
-        // Check if script file exists
+      if (event.script && typeof event.script === 'string') {
         const scriptPath = path.join(hooksDir, event.script);
         if (!fs.existsSync(scriptPath)) {
           errors.push({ instancePath: `/events/${i}/script`, message: `Script file not found: ${event.script}` });
         }
       }
-      if (event.condition && typeof event.condition !== 'string') {
-        errors.push({ instancePath: `/events/${i}/condition`, message: 'Condition must be a string if present' });
-      }
     }
   }
+  
   return { valid: errors.length === 0, errors };
 }
 
