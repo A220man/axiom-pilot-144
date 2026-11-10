@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_feature": "hooks-schema-validation",
+  "current_feature": "logo-path-validation",
   "features": [
     {
       "id": "plugin-manifest-schema",
@@ -311,6 +311,25 @@
         "schemas/hooks.schema.json",
         "scripts/validate-plugins.mjs (added hooksValidate, updated validateHooks)",
         "tests/test-validator-cli.mjs (added additional properties test)"
+      ],
+      "tests": [
+        "tests/test-validator-cli.mjs"
+      ]
+    },
+    {
+      "id": "logo-path-validation",
+      "title": "Logo file path validation in plugin manifest",
+      "status": "done",
+      "acceptance": [
+        "plugin.schema.json includes optional logo field with string type",
+        "checkPaths function validates logo file exists on disk",
+        "Error reported with specific file path when logo file is missing",
+        "Tests cover valid logo path and missing logo file"
+      ],
+      "implementation": [
+        "schemas/plugin.schema.json (added logo field)",
+        "scripts/validate-plugins.mjs (updated checkPaths and main validation loop)",
+        "tests/test-validator-cli.mjs (added logo validation tests)"
       ],
       "tests": [
         "tests/test-validator-cli.mjs"

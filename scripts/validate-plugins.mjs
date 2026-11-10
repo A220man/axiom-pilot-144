@@ -181,6 +181,12 @@ function checkPaths(plugin, pluginDir) {
       }
     }
   }
+  if (plugin.logo) {
+    const logoPath = path.join(pluginDir, plugin.logo);
+    if (!fs.existsSync(logoPath)) {
+      errors.push(`logo: file not found at ${logoPath}`);
+    }
+  }
   if (plugin.variables) {
     for (const [key, value] of Object.entries(plugin.variables)) {
       if (value.required && (!process.env[key] && !value.default)) {
@@ -639,6 +645,14 @@ async function main() {
       }
     } else if (result.plugin && result.plugin.rules && result.plugin.rules.length > 0) {
       console.log('✓ Rules validation passed');
+    }
+    // Report path errors
+    if (pathErrors.length > 0) {
+      allValid = false;
+      console.error('✗ Path validation failed:');
+      for (const err of pathErrors) {
+        console.error(`  ${err}`);
+      }
     }
   }
 

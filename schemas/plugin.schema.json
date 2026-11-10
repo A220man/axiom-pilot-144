@@ -52,6 +52,10 @@
       "items": { "type": "string" },
       "description": "MCP server definitions."
     },
+    "logo": {
+      "type": "string",
+      "description": "Path to plugin logo image file."
+    },
     "rules": {
       "type": "array",
       "items": { "type": "string" },
