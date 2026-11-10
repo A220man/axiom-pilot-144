@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.1.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -55,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Skill validation optimization** - `validateSkill` returns frontmatter to eliminate redundant file reads in main validation loop
 - **Comprehensive component validation** - Main validation loop now validates all plugin components (agents, hooks, commands, rules) with schema-based validation and detailed error reporting
 - **Hook script file existence validation** - `validateHooks` now checks if script files referenced in hooks.json exist on disk, reports errors with specific file paths
+- **Logo file path validation** - Plugin manifest schema now includes optional `logo` field; validator checks logo file exists on disk and reports errors with specific file paths
 
 ### Changed
 - Comprehensive validator accepts target directory argument
@@ -78,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rule validation uses JSON schema instead of basic checks
 - Script package validation runs test and typecheck commands when flags provided
 - Hook script validation now catches missing script files at validation time
+- Logo validation catches missing logo files at validation time
 
 ### Security
 - Pinned dependencies in package-lock.json for reproducible builds

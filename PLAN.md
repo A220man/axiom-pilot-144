@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-hooks-schema-validation
+logo-path-validation
 
 ## Roadmap
 
@@ -235,6 +235,20 @@ Acceptance:
 - Test added for additional properties rejection
 
 Implementation: `schemas/hooks.schema.json`, `scripts/validate-plugins.mjs (added hooksValidate, updated validateHooks)`, `tests/test-validator-cli.mjs (added additional properties test)`
+
+Tests: `tests/test-validator-cli.mjs`
+
+### logo-path-validation — Logo file path validation in plugin manifest
+
+Status: done
+
+Acceptance:
+- plugin.schema.json includes optional logo field with string type
+- checkPaths function validates logo file exists on disk
+- Error reported with specific file path when logo file is missing
+- Tests cover valid logo path and missing logo file
+
+Implementation: `schemas/plugin.schema.json (added logo field)`, `scripts/validate-plugins.mjs (updated checkPaths and main validation loop)`, `tests/test-validator-cli.mjs (added logo validation tests)`
 
 Tests: `tests/test-validator-cli.mjs`
 

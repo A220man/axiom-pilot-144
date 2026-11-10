@@ -70,6 +70,47 @@ allPassed &= runTest('Valid plugin with all components', {
     args: ['server.js', '--api-key', '${API_KEY}']
   }, null, 2)
 }, true, { API_KEY: 'test-key' });
+// Valid plugin with logo
+allPassed &= runTest('Valid plugin with logo', {
+  name: 'test-plugin',
+  version: '1.0.0',
+  displayName: 'Test Plugin',
+  description: 'A test plugin',
+  skills: ['test-skill'],
+  agents: ['test-agent'],
+  hooks: ['test-hook'],
+  mcpServers: ['test-server'],
+  logo: 'logo.png',
+  variables: { API_KEY: { description: 'API key', required: true } }
+}, {
+  'test-skill/SKILL.md': `---\nname: test-skill\ndescription: A test skill\n---\n`,
+  'test-agent/test-agent.md': `---\nname: test-agent\ndescription: A test agent\n---\n`,
+  'test-hook/hooks.json': JSON.stringify({
+    events: [
+      { event: 'on-save', script: 'format.js' }
+    ]
+  }, null, 2),
+  'test-hook/format.js': 'console.log("formatting...");\n',
+  'test-server/mcp.json': JSON.stringify({
+    name: 'test-server',
+    command: 'node',
+    args: ['server.js', '--api-key', '${API_KEY}']
+  }, null, 2),
+  'logo.png': 'fake logo content'
+}, true, { API_KEY: 'test-key' });
+
+// Invalid logo path (file doesn't exist)
+allPassed &= runTest('Invalid logo path', {
+  name: 'test-plugin',
+  version: '1.0.0',
+  displayName: 'Test Plugin',
+  description: 'A test plugin',
+  skills: ['test-skill'],
+  logo: 'nonexistent.png',
+  variables: { API_KEY: { description: 'API key', required: true } }
+}, {
+  'test-skill/SKILL.md': `---\nname: test-skill\ndescription: A test skill\n---\n`
+}, false, { API_KEY: 'test-key' });
 
 // Invalid skill name (doesn't match folder)
 allPassed &= runTest('Invalid skill name mismatch', {
