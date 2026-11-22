@@ -185,6 +185,12 @@ function checkPaths(plugin, pluginDir) {
     const logoPath = path.join(pluginDir, plugin.logo);
     if (!fs.existsSync(logoPath)) {
       errors.push(`logo: file not found at ${logoPath}`);
+    } else {
+      const validExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'];
+      const ext = path.extname(plugin.logo).toLowerCase();
+      if (!validExtensions.includes(ext)) {
+        errors.push(`logo: invalid extension "${ext}", expected one of: ${validExtensions.join(', ')}`);
+      }
     }
   }
   if (plugin.variables) {
