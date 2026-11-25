@@ -182,6 +182,9 @@ function checkPaths(plugin, pluginDir) {
     }
   }
   if (plugin.logo) {
+    if (path.isAbsolute(plugin.logo) || plugin.logo.split(/[\\/]/).includes('..')) {
+      errors.push(`logo: must be a relative path inside the plugin directory, got "${plugin.logo}"`);
+    }
     const logoPath = path.join(pluginDir, plugin.logo);
     if (!fs.existsSync(logoPath)) {
       errors.push(`logo: file not found at ${logoPath}`);
