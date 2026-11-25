@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_feature": "logo-path-validation",
+  "current_feature": "logo-path-containment",
   "features": [
     {
       "id": "plugin-manifest-schema",
@@ -330,6 +330,25 @@
         "schemas/plugin.schema.json (added logo field)",
         "scripts/validate-plugins.mjs (updated checkPaths and main validation loop)",
         "tests/test-validator-cli.mjs (added logo validation tests)"
+      ],
+      "tests": [
+        "tests/test-validator-cli.mjs"
+      ]
+    },
+    {
+      "id": "logo-path-containment",
+      "title": "Plugin logo path must stay inside the plugin directory",
+      "status": "done",
+      "acceptance": [
+        "plugin.schema.json constrains logo to a relative path (no leading slash, no ../ segment)",
+        "checkPaths reports an error for absolute logo paths and for logo paths containing a .. segment",
+        "Nested relative logo paths (for example assets/logo.svg) still validate when the file exists",
+        "Tests cover traversal, absolute, nested traversal and valid nested logo paths"
+      ],
+      "implementation": [
+        "schemas/plugin.schema.json",
+        "scripts/validate-plugins.mjs",
+        "tests/test-validator-cli.mjs"
       ],
       "tests": [
         "tests/test-validator-cli.mjs"

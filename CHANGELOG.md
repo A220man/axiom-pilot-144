@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
+## Unreleased
+
+### Fixed
+- Plugin manifest `logo` paths that are absolute or contain `..` are now rejected by
+  the schema and by `scripts/validate-plugins.mjs`, so a manifest cannot point outside
+  its own plugin directory. Nested relative paths such as `assets/logo.svg` still work.
+
 ## 1.4.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.

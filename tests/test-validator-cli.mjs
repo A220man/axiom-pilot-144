@@ -866,5 +866,56 @@ allPassed &= runTest('Valid skill without scripts field', {
   'test-skill/SKILL.md': `---\nname: test-skill\ndescription: A test skill\n---\n`
 }, true, { API_KEY: 'test-key' });
 
+// Invalid logo path (parent directory traversal)
+allPassed &= runTest('Invalid logo path traversal', {
+  name: 'test-plugin',
+  version: '1.0.0',
+  displayName: 'Test Plugin',
+  description: 'A test plugin',
+  skills: ['test-skill'],
+  logo: '../logo.png'
+}, {
+  'test-skill/SKILL.md': `---\nname: test-skill\ndescription: A test skill\n---\n`,
+  'logo.png': 'fake logo content'
+}, false, { API_KEY: 'test-key' });
+
+// Invalid logo path (absolute path)
+allPassed &= runTest('Invalid logo absolute path', {
+  name: 'test-plugin',
+  version: '1.0.0',
+  displayName: 'Test Plugin',
+  description: 'A test plugin',
+  skills: ['test-skill'],
+  logo: '/etc/hosts'
+}, {
+  'test-skill/SKILL.md': `---\nname: test-skill\ndescription: A test skill\n---\n`
+}, false, { API_KEY: 'test-key' });
+
+// Invalid logo path (nested traversal that resolves outside the plugin directory)
+allPassed &= runTest('Invalid logo nested traversal', {
+  name: 'test-plugin',
+  version: '1.0.0',
+  displayName: 'Test Plugin',
+  description: 'A test plugin',
+  skills: ['test-skill'],
+  logo: 'assets/../../logo.png'
+}, {
+  'test-skill/SKILL.md': `---\nname: test-skill\ndescription: A test skill\n---\n`,
+  'logo.png': 'fake logo content'
+}, false, { API_KEY: 'test-key' });
+
+// Valid logo path in a subdirectory
+allPassed &= runTest('Valid nested logo path', {
+  name: 'test-plugin',
+  version: '1.0.0',
+  displayName: 'Test Plugin',
+  description: 'A test plugin',
+  skills: ['test-skill'],
+  logo: 'assets/logo.svg'
+}, {
+  'test-skill/SKILL.md': `---\nname: test-skill\ndescription: A test skill\n---\n`,
+  'assets/logo.svg': '<svg xmlns="http://www.w3.org/2000/svg"></svg>'
+}, true, { API_KEY: 'test-key' });
+
 console.log(allPassed ? '\nAll tests passed!' : '\nSome tests failed!');
 process.exit(allPassed ? 0 : 1);
